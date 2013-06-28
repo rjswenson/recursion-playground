@@ -1,34 +1,28 @@
 
+num = 1
+diviser = 1
 
-
+prime = 0
 def_prime = num%diviser
 
-num = 1
-diviser = 2
-
-possible = 0
-
-
-50.times do
+loop do
+    
 	
-	
-if def_prime > 0 && num!=diviser
+	if def_prime > 0 && num!=diviser
+		diviser +=1
+		num = prime
+		
 
-	num = possible
-	diviser +=1
+	elsif diviser == num-1 && prime ==num
 
-elsif diviser >= num-1 && possible ==num
-
-	puts "#{possible}"
+		puts "#{prime}"
 	
 
-elsif def_prime == 0
-	num +=1
-
-
-else
-
-
-break
-
+	else
+		num +=1
+		div = 2
+		prime = 0
+	
+	end
+break if num > 100
 end
