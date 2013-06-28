@@ -1,4 +1,3 @@
-
 num = 3
 diviser = 2
 
