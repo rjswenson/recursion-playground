@@ -1,4 +1,3 @@
-
 num = 3
 diviser = 2
 
@@ -35,7 +34,7 @@ end
 pri_seg = (2**prime)-1   #must also be prime
 true_seg = 0			#placeholder to put pri seg w/in
 
-perfect_num = 2**(prime-1)((pri_seg)
+perfect_num = 2**(prime-1)(pri_seg)
 
 if pri_seg%diviser > 0 && pri_seg > deviser -1
 	deviser+=1
