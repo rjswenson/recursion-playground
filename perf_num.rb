@@ -1,23 +1,34 @@
 
 
 
-def_prime = y%x > 0
+def_prime = num%diviser
 
-y = 1
-x = 2
-x != y
+num = 1
+diviser = 2
 
-30.times
+possible = 0
 
-do
-	if def_prime = true
 
-		puts "#{y}"
+50.times do
+	
+	
+if def_prime > 0 && num!=diviser
 
-		y+=1
+	num = possible
+	diviser +=1
 
-	else
+elsif diviser >= num-1 && possible ==num
 
-	y+=1
+	puts "#{possible}"
+	
+
+elsif def_prime == 0
+	num +=1
+
+
+else
+
+
+break
 
 end
