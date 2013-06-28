@@ -1,3 +1,6 @@
+
+#formulaeic approach to the problem
+
 num = 3
 diviser = 2
 
