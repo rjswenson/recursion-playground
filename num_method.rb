@@ -1,7 +1,6 @@
 
-
-def get_factors(num1)
-  factors = []            #factors here
+def get_factors(num1)           #factors here
+  #factors = [] 
   for n in 1..num1
     if num1%n == 0
       factors.push(n)
@@ -18,6 +17,16 @@ def sum_of_array(array)
 p sum
 end
 
+def perfect_check(num1)
+  if num1 == (sum/2)
+    puts "#{num1} is a perfect number."
+    sum = 0
+    factors.clear
+  else
+    sum = 0
+    factors.clear
+  end
+end
 
 
 
@@ -26,5 +35,6 @@ end
 p "What number?"
 input = gets.chomp.to_i
 get_factors(input)
-sum_of_array(factors)   #calling method w/factors array
+#sum_of_array(factors) 
+perfect_check(input)
 
