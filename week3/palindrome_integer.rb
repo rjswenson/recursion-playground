@@ -25,3 +25,43 @@
 # 9990999
 #
 # HINT: it's much easier to reverse an array than a number or a string...
+
+
+
+#first, take input, turn to string, array, turn to int.
+#flip values w/in array
+#next output array as non-array
+#then check if original input is = to output, if so, true palendrome
+def reverse_number(input)
+  input = input.split(//)
+  to_integer = input.collect {|letter| letter = letter.to_i}
+  reversed = to_integer.reverse
+  reversed = reversed.join.to_i
+  return reversed
+end
+
+def is_palindrome(x)
+  input = x.to_i
+  check = reverse_number(x)
+  if check == input
+    return true
+  else
+    return false
+  end
+end
+
+
+
+p "Input an integer to be reversed."
+input = gets.chomp.to_s
+answer = reverse_number(input)
+p "Your number is now: #{answer}"
+bool = is_palindrome(input)
+if bool == true
+  p "#{input} is a palindrome."
+else
+  p "#{input} is not a palindrome."
+end
+
+
+
