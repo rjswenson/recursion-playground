@@ -102,26 +102,24 @@ Examples of numbers:
 #step 2 : Add the odd digits
 #step 3 : Add step 1 and 2, if that number is divisible by 10, its a valid card
 
-def sum_of_even_digits(cc)   #adds every even digit
-  cc = cc.to_s.split(//)
-  reverse_cc = cc.reverse.values_at(1,3,5,7,9,11,13,15).compact
+def sum_of_even_digits(n)   #adds every even digit
+  n = n.to_s.split(//)
+  reverse_cc = n.reverse.values_at(1,3,5,7,9,11,13,15).compact
   double_cc = reverse_cc.collect {|num| num = (num.to_i)*2}  
   sum_evens = 0
   double_cc.collect {|val| sum_evens += get_digit(val)}
   return sum_evens
 end
 
-
-def sum_of_odd_digits(cc)  #adds every odd digit
-  cc = cc.to_s.split(//)
-  reverse_cc = cc.reverse.values_at(0,2,4,6,8,10,12,14,16).compact
+def sum_of_odd_digits(n)  #adds every odd digit
+  n = n.to_s.split(//)
+  reverse_cc = n.reverse.values_at(0,2,4,6,8,10,12,14,16).compact
   reverse_cc = reverse_cc.collect{|num| num = num.to_i}
   sum_odds = 0
   p reverse_cc
   reverse_cc.collect{|odd| sum_odds = sum_odds + odd}
   return sum_odds
 end
-
 
 def get_digit(n)  #Gets proper digit for sum of evens
   if n <= 9
@@ -135,6 +133,18 @@ def get_digit(n)  #Gets proper digit for sum of evens
   end
 end
 
+def get_prefix(n)  #gets the prefix/first digit of card
+  digits = n.to_s.split(//)
+  digits.collect {|st| st.to_i}
+  prefix = digits.fetch(0)
+  if prefix == "3"
+    prefix = prefix + digits.fetch(1)
+  end
+  prefix = prefix.to_i
+  return prefix
+end
+ 
 
-sum_val = sum_of_even_digits(4388576018410707)
-p sum_val
+
+test = get_prefix(37345345)
+p test
