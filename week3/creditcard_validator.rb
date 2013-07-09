@@ -102,40 +102,39 @@ Examples of numbers:
 #step 2 : Add the odd digits
 #step 3 : Add step 1 and 2, if that number is divisible by 10, its a valid card
 
-def sum_of_even_digits(cc)
+def sum_of_even_digits(cc)   #adds every even digit
   cc = cc.to_s.split(//)
   reverse_cc = cc.reverse.values_at(1,3,5,7,9,11,13,15).compact
   double_cc = reverse_cc.collect {|num| num = (num.to_i)*2}  
   sum_evens = 0
-  p double_cc
-  for i in double_cc
-    if i <= 9
-      sum_evens = sum_evens + i
-    else 
-      i = i.to_s.split(//)
-      i.collect!{|str| str = str.to_i}
-      i.each {|val| sum_evens = sum_evens + val}
-    end
-  end
+  double_cc.collect {|val| sum_evens += get_digit(val)}
   return sum_evens
 end
 
 
-def sum_of_odd_digits(cc)
+def sum_of_odd_digits(cc)  #adds every odd digit
   cc = cc.to_s.split(//)
   reverse_cc = cc.reverse.values_at(0,2,4,6,8,10,12,14,16).compact
-  reverse_cc = reverse_cc.to_i
+  reverse_cc = reverse_cc.collect{|num| num = num.to_i}
   sum_odds = 0
+  p reverse_cc
   reverse_cc.collect{|odd| sum_odds = sum_odds + odd}
   return sum_odds
 end
 
-evens = sum_of_even_digits(4388576018410707)
-odds = sum_of_odd_digits(4388576018410707)
 
-total = evens + odds
-p total
+def get_digit(n)  #Gets proper digit for sum of evens
+  if n <= 9
+    return n
+  else
+    n = n.to_s.split(//)
+    digit= 0
+    n.collect! {|str| str.to_i}
+    n.each {|val| digit = digit + val}
+    return digit
+  end
+end
 
 
-
-
+sum_val = sum_of_even_digits(4388576018410707)
+p sum_val
