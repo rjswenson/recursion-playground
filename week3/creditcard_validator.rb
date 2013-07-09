@@ -97,4 +97,33 @@ Examples of numbers:
  |5111005111051128|true |
 
 =end
+# Note:  Cards are 13-16 digits.  Cards start with 4, 5, 6, or 37 depending on the company
+#step 1 : Double every 2nd digit, starting right to left.  If value > 9, add two digits together (6*6 = 12, 1+2 = 3)
+#step 2 : Add the odd digits
+#step 3 : Add step 1 and 2, if that number is divisible by 10, its a valid card
+
+def sum_of_even_digits(cc)
+  cc = cc.to_s.split(//)
+  reverse_cc = cc.reverse.values_at(1,3,5,7,9,11,13,15).compact
+  double_cc = reverse_cc.collect {|num| num = (num.to_i)*2}  
+  sum_value = 0
+  p double_cc
+  for i in double_cc
+    if i <= 9
+      sum_value = sum_value + i
+    else 
+      i = i.to_s.split(//)
+      i.collect!{|str| str = str.to_i}
+      i.each {|val| sum_value = sum_value + val}
+    end
+  end
+  return sum_value
+end
+
+
+def
+
+
+
+
 
