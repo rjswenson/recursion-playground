@@ -106,23 +106,35 @@ def sum_of_even_digits(cc)
   cc = cc.to_s.split(//)
   reverse_cc = cc.reverse.values_at(1,3,5,7,9,11,13,15).compact
   double_cc = reverse_cc.collect {|num| num = (num.to_i)*2}  
-  sum_value = 0
+  sum_evens = 0
   p double_cc
   for i in double_cc
     if i <= 9
-      sum_value = sum_value + i
+      sum_evens = sum_evens + i
     else 
       i = i.to_s.split(//)
       i.collect!{|str| str = str.to_i}
-      i.each {|val| sum_value = sum_value + val}
+      i.each {|val| sum_evens = sum_evens + val}
     end
   end
-  return sum_value
+  return sum_evens
 end
 
 
-def
+def sum_of_odd_digits(cc)
+  cc = cc.to_s.split(//)
+  reverse_cc = cc.reverse.values_at(0,2,4,6,8,10,12,14,16).compact
+  reverse_cc = reverse_cc.to_i
+  sum_odds = 0
+  reverse_cc.collect{|odd| sum_odds = sum_odds + odd}
+  return sum_odds
+end
 
+evens = sum_of_even_digits(4388576018410707)
+odds = sum_of_odd_digits(4388576018410707)
+
+total = evens + odds
+p total
 
 
 
