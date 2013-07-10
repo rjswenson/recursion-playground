@@ -175,6 +175,20 @@ end
 
 
 
+test_arr = []
+test_arr.push([4388576018402626 , false])
+test_arr.push([4388576018410707 , true])
+test_arr.push([371449635398431 , true])
+test_arr.push([378282246310005 , true])
+test_arr.push([6011016011016011 , true])
+test_arr.push([5454545454545454 , true])
+test_arr.push([5111005111051128 , true])
+
+test_arr.each do|i| 
+  p "Number #{i[0]} expects #{i[1]} returns #{is_valid(i[0])}"
+
+end
+
 
 
 
