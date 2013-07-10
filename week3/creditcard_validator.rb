@@ -100,7 +100,7 @@ Examples of numbers:
 # Note:  Cards are 13-16 digits.  Cards start with 4, 5, 6, or 37 depending on the company
 #step 1 : Double every 2nd digit, starting right to left.  If value > 9, add two digits together (6*6 = 12, 1+2 = 3)
 #step 2 : Add the odd digits
-#step 3 : Add step 1 and 2, if that number is divisible by 10, its a valid card
+#step 3 : Add step 1 and 2, if that number is divisible by 10, has the right prefix, is the right length
 
 def sum_of_even_digits(n)   #adds every even digit
   n = n.to_s.split(//)
@@ -116,7 +116,6 @@ def sum_of_odd_digits(n)  #adds every odd digit
   reverse_cc = n.reverse.values_at(0,2,4,6,8,10,12,14,16).compact
   reverse_cc = reverse_cc.collect{|num| num = num.to_i}
   sum_odds = 0
-  p reverse_cc
   reverse_cc.collect{|odd| sum_odds = sum_odds + odd}
   return sum_odds
 end
@@ -143,8 +142,39 @@ def get_prefix(n)  #gets the prefix/first digit of card
   prefix = prefix.to_i
   return prefix
 end
- 
+
+def prefix_matched(n)
+  n = get_prefix(n)
+  if n == 37 || n == 4 || n == 5 || n == 6
+    return true
+  else
+    return false
+  end
+end
+
+def num_digits(n)
+  digits = n.to_s.split(//)
+  if digits.count > 12 && digits.count < 17
+    return true
+  else
+    return false
+  end
+end
 
 
-test = get_prefix(37345345)
-p test
+def is_valid(n)
+  evens = sum_of_even_digits(n)
+  odds = sum_of_odd_digits(n)
+  sum = evens + odds
+  if sum%10 == 0 && prefix_matched(n) == true && num_digits(n) == true
+    return true
+  else 
+    return false
+  end
+end  
+
+
+
+
+
+
