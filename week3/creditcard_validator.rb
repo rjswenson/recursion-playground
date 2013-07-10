@@ -105,10 +105,25 @@ Examples of numbers:
 def sum_of_even_digits(n)   #adds every even digit
   n = n.to_s.split(//)
   reverse_cc = n.reverse.values_at(1,3,5,7,9,11,13,15).compact
-  double_cc = reverse_cc.collect {|num| num = (num.to_i)*2}  
   sum_evens = 0
-  double_cc.collect {|val| sum_evens += get_digit(val)}
+
+  # for x in 0..reverse_cc.length-1
+  #   doubled = reverse_cc[x].to_i * 2
+  #   sum_evens += get_digit(doubled)
+  # end 
+
+  reverse_cc.each do |cc_number|
+    doubled = cc_number.to_i * 2
+    sum_evens += get_digit(doubled)
+  end
+
   return sum_evens
+
+
+  # double_cc = reverse_cc.collect {|num| num = (num.to_i)*2}  
+  # sum_evens = 0
+  # double_cc.collect {|val| sum_evens += get_digit(val)}
+  # return sum_evens
 end
 
 def sum_of_odd_digits(n)  #adds every odd digit
@@ -163,17 +178,17 @@ end
 
 
 def is_valid(n)
+  if num_digits(n) == false
+    return false
+  end
+  if prefix_matched(n) == false
+    return false
+  end
   evens = sum_of_even_digits(n)
   odds = sum_of_odd_digits(n)
   sum = evens + odds
-  if sum%10 == 0 && prefix_matched(n) == true && num_digits(n) == true
-    return true
-  else 
-    return false
-  end
-end  
-
-
+  return sum%10 == 0
+end
 
 test_arr = []
 test_arr.push([4388576018402626 , false])
