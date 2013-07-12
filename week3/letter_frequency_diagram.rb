@@ -25,13 +25,27 @@
 # NOTE: {} is a "Hash" - a new type of data structure
 
 def get_frequencies(word)
-
+  word_array = word.to_s.split(//)
+  # check each letter vs a to z
+  # if letter matches a to z, p letter => 1
+  # if letter already represented by hash, add 1 to previous value
+  #p all letter hashes
+  word_array.each do |x|
+    if x =! puts
+      p x
+    end
+  end
 end
+  
+   
+
+
 
 def make_histogram(word)
 
 end
-
+boots = "poops"
+derp = get_frequencies(boots)
 ###############################################################################
 # TEST CODE BELOW
 #################
@@ -82,5 +96,5 @@ def test_print_histogram
   end
 end
 
-test_get_frequencies()
-test_print_histogram()
+#test_get_frequencies()
+#test_print_histogram()
