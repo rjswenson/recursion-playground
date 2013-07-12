@@ -24,28 +24,39 @@
 # NOTE: the \n character sequence means "new line"
 # NOTE: {} is a "Hash" - a new type of data structure
 
-def get_frequencies(word)
-  word_array = word.to_s.split(//)
-  # check each letter vs a to z
-  # if letter matches a to z, p letter => 1
-  # if letter already represented by hash, add 1 to previous value
-  #p all letter hashes
-  word_array.each do |x|
-    if x =! puts
-      p x
+hash_example = Hash.new
+hash_example["number"] = 2
+hash_example["summer_sausage"] = "delicious"
+hash_example["cat"] = "animal"
+hash_example["chicken"] = "animal"
+
+
+#get word
+#split to letters
+#freq = Hash.new
+#for each key(letter), value += 1
+#eg "woot"
+def get_frequencies(array)
+  freq = Hash.new
+  for i in 0..array.length-1
+    if freq[array[i]] == nil
+      freq[array[i]] = 1
+    else
+      freq[array[i]] = freq[array[i]] +1
     end
   end
+    return freq
 end
-  
-   
 
 
 
-def make_histogram(word)
+foobar = ["f","o","o","b","r"]
+test_output = get_frequencies(foobar)
 
-end
-boots = "poops"
-derp = get_frequencies(boots)
+p test_output.sort
+
+
+
 ###############################################################################
 # TEST CODE BELOW
 #################
