@@ -27,57 +27,49 @@
 
 
 
-def get_frequencies(word)
-  array = word.split(//)
-  freq = Hash.new
-  for i in 0..array.length-1
+def get_frequencies(word)   
+  array = word.split(//)      #take input, split to letters
+  freq = Hash.new             
+  for i in 0..array.length-1  #counts each letter, adding to array[1]
     if freq[array[i]] == nil
       freq[array[i]] = 1
     else
       freq[array[i]] = freq[array[i]] +1
     end
   end
-    return freq
+    return freq  #hash containing key "letter" value "number"
 end
 
-def make_histogram(word)
-  #pull hash from get frequencies
-  #make into array
-  #for each [0], p that character and :
-  #for each [1], convert that number to stars
-  #output each pair in array on newlines
+def make_histogram(word)        #takes hash and star-a-fies it
   histo_arr = get_frequencies(word).to_a
-  p "******************************"
-  p histo_arr
-  p "******************************"
-  star_count = 0
+  star_count = 0                #star tally
   histo_arr.each do |i|
-    while i[1] > star_count
-        if i.include?("*") == true
-          i[2]+= "*"
-          star_count += 1
+    while i[1] > star_count     #adds one "*" to i[2]
+        star_count +=1
+        if star_count > 1
+          i[2] += "*"
         else
-        i.insert(2,"*")
-        star_count += 1
-      end
+          i[2] = "*"      #can't add to nil [2], creates i[2]
+        end
     end
-    #i.delete_at(1)
     star_count = 0
+    i.delete_at(1)        #deletes count in array
   end
-  
-  p histo_arr
-
-  #star_hash = Hash[*histo_arr.flatten]
-  #return star_hash
-  
-
+ 
+  letter_hash = Hash[*histo_arr.flatten]  #converts arr to hash
+  letter_hash.each do |k , v|     #outputs key(letter) and val(*'s)
+    p "#{k}: #{v}"
+  end
 end
 
 
+p "Welcome to the 'Letter Frequency Diagram Maker'"
+p "Input a word, so we can create our diagram."
+word = gets.chomp.downcase
+make_histogram(word)
 
 
 
-test = make_histogram("foooooobarrr")
 
 
 ###############################################################################
