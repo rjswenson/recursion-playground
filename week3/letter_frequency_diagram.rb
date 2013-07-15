@@ -47,8 +47,24 @@ def make_histogram(word)
   #for each [1], convert that number to stars
   #output each pair in array on newlines
   histo_arr = get_frequencies(word).to_a
+  p "******************************"
   p histo_arr
+  p "******************************"
+  star_count = 0
+  histo_arr.each do |i|
+    while i[1] > star_count
+        i.push("*")
+      star_count += 1
+    end
+    star_count = 0
+  end
+  p histo_arr
+
 end
+
+
+
+
 
 test = make_histogram("foobar")
 
