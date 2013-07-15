@@ -53,12 +53,23 @@ def make_histogram(word)
   star_count = 0
   histo_arr.each do |i|
     while i[1] > star_count
-        i.push("*")
-      star_count += 1
+        if i.include?("*") == true
+          i[2]+= "*"
+          star_count += 1
+        else
+        i.insert(2,"*")
+        star_count += 1
+      end
     end
+    #i.delete_at(1)
     star_count = 0
   end
+  
   p histo_arr
+
+  #star_hash = Hash[*histo_arr.flatten]
+  #return star_hash
+  
 
 end
 
@@ -66,7 +77,8 @@ end
 
 
 
-test = make_histogram("foobar")
+test = make_histogram("foooooobarrr")
+
 
 ###############################################################################
 # TEST CODE BELOW
