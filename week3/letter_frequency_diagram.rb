@@ -24,19 +24,11 @@
 # NOTE: the \n character sequence means "new line"
 # NOTE: {} is a "Hash" - a new type of data structure
 
-hash_example = Hash.new
-hash_example["number"] = 2
-hash_example["summer_sausage"] = "delicious"
-hash_example["cat"] = "animal"
-hash_example["chicken"] = "animal"
 
 
-#get word
-#split to letters
-#freq = Hash.new
-#for each key(letter), value += 1
-#eg "woot"
-def get_frequencies(array)
+
+def get_frequencies(word)
+  array = word.split(//)
   freq = Hash.new
   for i in 0..array.length-1
     if freq[array[i]] == nil
@@ -48,14 +40,17 @@ def get_frequencies(array)
     return freq
 end
 
+def make_histogram(word)
+  #pull hash from get frequencies
+  #make into array
+  #for each [0], p that character and :
+  #for each [1], convert that number to stars
+  #output each pair in array on newlines
+  histo_arr = get_frequencies(word).to_a
+  p histo_arr
+end
 
-
-foobar = ["f","o","o","b","r"]
-test_output = get_frequencies(foobar)
-
-p test_output.sort
-
-
+test = make_histogram("foobar")
 
 ###############################################################################
 # TEST CODE BELOW
@@ -79,7 +74,8 @@ def test_get_frequencies
 
   tests.each do |test|
     puts "\ngetting frequencies for #{test[0]}..."
-    if test[1].to_a == get_frequencies(test[1].to_a)
+    if test[1] == get_frequencies(test[0])
+      p get_frequencies(test[0])
       puts "good to go!"
     else
       puts "failed! expected #{test[1]} and got #{get_frequencies(test[0])}"
