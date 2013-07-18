@@ -145,12 +145,66 @@ describe 'adding tickets' do
         expect(total).to eq(3050)
       end
     end
+  end
   context 'given 1 student, 1 ga ticket' do
     context 'with a 3d movie' do
       it 'calculates total' do
-        invoice = start_purchase()
+        invoice = start_purchase(false, true, false, false)
+        manifest = Hash.new(0)
+        manifest[:student] = 1
+        manifest[:general_admission] = 1
+        total = compute_total(invoice, manifest)
+        expect(total).to eq(2500)
+      end
+    end
   end
 end
+
+describe 'Its Thursday!' do
+  context 'adjusts price down for thursday' do
+    context 'one general admission ticket' do
+      it 'reduces by 200' do
+        invoice = start_purchase(false, false, false, false)
+        manifest = Hash.new(0)
+        manifest[:general_admission] = 1
+        total = thurs_adjust(compute_total(invoice , manifest) , manifest)
+        expect(total).to eq(900)
+      end
+    end
+    context 'one ga, one student ticket' do
+      it 'reduces by 200 * 2' do
+        invoice = start_purchase(false, false, false, false)
+        manifest = Hash.new(0)
+        manifest[:general_admission] = 1
+        manifest[:student] = 1
+        total = thurs_adjust(compute_total(invoice , manifest) , manifest)
+        expect(total).to eq(1500)
+      end
+    end
+    context 'one group ticket' do
+      it 'does NOT reduce cost by 200' do
+        invoice = start_purchase(false, false, false, false)
+        manifest = Hash.new(0)
+        manifest[:group] = 1
+        total = thurs_adjust(compute_total(invoice , manifest) , manifest)
+        expect(total).to eq(600)
+      end
+    end
+    context '1 ga, 1 student ticket' do
+      context '3d movie & overlength' do
+        it 'reduce by 200/each' do
+          invoice = start_purchase(true, true, false, false)
+          manifest = Hash.new(0)
+          manifest[:general_admission] = 1
+          manifest[:student] = 1
+          total = thurs_adjust(compute_total(invoice , manifest) , manifest)
+          expect(total).to eq(2400)
+        end
+      end
+    end
+  end
+end
+
 
 
 
