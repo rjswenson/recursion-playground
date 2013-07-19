@@ -39,33 +39,27 @@ else
   manifest.each {|k , v| remainder = (tix_num -= v)}
   manifest[:general_admission] = remainder
  
-  p "That leaves #{manifest[:general_admission]} general admission tickets."
+  puts "\n\nThat leaves #{manifest[:general_admission]} general admission tickets."
 end
 
 isOverLength = false
 is3d = false
 isLoge = false
-isWeekend = false
-isThursday = false
+day = "s"
+
 
 p "What is the day, please spell it out[i.e. Monday]:"
-day = gets.chomp.to_s.downcase!
-
-if day == "saturday" || day == "sunday"
-  isWeekend = true
-elsif day == "thursday"
-  isThursday = true
-end
+day = gets.chomp.to_s.downcase
 
 p "Is this movie in 3D[yes/no]:"
-three_d = gets.chomp.to_s.downcase!
+three_d = gets.chomp.to_s.downcase
 
 if three_d == "yes"
   is3d = true
 end
 
 p "Will the guests be sitting on the balcony[yes/no]:"
-loge = gets.chomp.to_s.downcase!
+loge = gets.chomp.to_s.downcase
 
 if loge == "yes"
   isLoge = true
@@ -77,12 +71,10 @@ if mins > 120
   isOverLength = true
 end
 
-invoice = start_purchase(isOverLength, is3d, isLoge, isWeekend)
+invoice = start_purchase(isOverLength, is3d, isLoge, day)
 total = compute_total(invoice, manifest)
-if isThursday == true
-  total = thurs_adjust(compute_total(invoice, manifest), manifest)
-end
 
-puts %Q|\n\nThe total cost is: $#{'%.2f' % total} \n \nfor tickets to: '#{title}'\n\n|
+
+puts %Q|\n\nThe total cost is: $#{'%.2f' % (total/100)} \n \nfor tickets to: '#{title}'\n\n|
 
 

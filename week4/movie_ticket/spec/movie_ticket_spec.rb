@@ -44,11 +44,11 @@ describe 'starting the purchase' do
 
       context 'when the movie is on the weekend' do
         it 'sets a flag for weekends' do
-          invoice = start_purchase(true, true, true, true)
+          invoice = start_purchase(true, true, true, "saturday")
           expect(invoice[:isOverLength]).to eq(true)
           expect(invoice[:is3d]).to eq(true)
           expect(invoice[:isLoge]).to eq(true)
-          expect(invoice[:isWeekend]).to eq(true)
+          expect(invoice[:day]).to eq("saturday")
           expect(invoice[:total]).to eq(0)
         end
       end
@@ -60,7 +60,7 @@ describe 'adding tickets' do
   context 'given a 3d movie' do    
     context 'given a single general admission ticket' do
       it 'computes the total' do
-        invoice = start_purchase(false, true, false, false)
+        invoice = start_purchase(false, true, false, "monday")
         manifest = Hash.new(0)
         manifest[:general_admission] = 1
         total = compute_total(invoice, manifest)
@@ -72,7 +72,7 @@ describe 'adding tickets' do
   context 'given a non-3d movie' do
     context 'given a single general admission ticket' do
       it 'computes the total' do
-        invoice = start_purchase(false, false, false, false)
+        invoice = start_purchase(false, false, false, "monday")
         manifest = Hash.new(0)
         manifest[:general_admission] = 1
         total = compute_total(invoice, manifest)
@@ -83,7 +83,7 @@ describe 'adding tickets' do
   context 'given an overlength movie' do
     context ' given a single general admission ticket' do
       it 'computes the total' do
-        invoice = start_purchase(true, false, false, false)
+        invoice = start_purchase(true, false, false, "monday")
         manifest = Hash.new(0)
         manifest[:general_admission] = 1
         total = compute_total(invoice, manifest)
@@ -92,7 +92,7 @@ describe 'adding tickets' do
     end
     context 'given a single length, 3d movie' do
       it 'computes the total' do
-      invoice = start_purchase(true, true, false, false)
+      invoice = start_purchase(true, true, false, "monday")
       manifest = Hash.new(0)
       manifest[:general_admission] = 1
       total = compute_total(invoice, manifest)
@@ -101,7 +101,7 @@ describe 'adding tickets' do
     end
     context 'given a weekend, long, 3d, box-seat movie' do
       it 'computes total' do
-        invoice = start_purchase(true, true, true, true)
+        invoice = start_purchase(true, true, true, "saturday")
         manifest = Hash.new(0)
         manifest[:general_admission] = 1
         total = compute_total(invoice, manifest)
@@ -112,7 +112,7 @@ describe 'adding tickets' do
   context 'given 2 ga' do
     context 'with no special movie params' do
       it 'computes the total' do
-        invoice = start_purchase(false, false, false, false)
+        invoice = start_purchase(false, false, false, "monday")
         manifest = Hash.new(0)
         manifest[:general_admission] = 2
         total = compute_total(invoice, manifest)
@@ -123,7 +123,7 @@ describe 'adding tickets' do
   context 'given 1 ga, one student' do
     context 'with no special movie params' do
       it 'computes total' do
-        invoice = start_purchase(false, false, false, false)
+        invoice = start_purchase(false, false, false, "monday")
         manifest = Hash.new(0)
         manifest[:general_admission] = 1
         manifest[:student] = 1
@@ -135,7 +135,7 @@ describe 'adding tickets' do
   context 'given 1 of each manifest symbol' do
     context 'with no special movie params' do
       it 'computes total' do
-        invoice = start_purchase(false, false, false, false)
+        invoice = start_purchase(false, false, false, "monday")
         manifest = Hash.new(0)
         manifest[:general_admission] = 1
         manifest[:student] = 1
@@ -149,7 +149,7 @@ describe 'adding tickets' do
   context 'given 1 student, 1 ga ticket' do
     context 'with a 3d movie' do
       it 'calculates total' do
-        invoice = start_purchase(false, true, false, false)
+        invoice = start_purchase(false, true, false, "monday")
         manifest = Hash.new(0)
         manifest[:student] = 1
         manifest[:general_admission] = 1
@@ -164,40 +164,40 @@ describe 'Its Thursday!' do
   context 'adjusts price down for thursday' do
     context 'one general admission ticket' do
       it 'reduces by 200' do
-        invoice = start_purchase(false, false, false, false)
+        invoice = start_purchase(false, false, false, "thursday")
         manifest = Hash.new(0)
         manifest[:general_admission] = 1
-        total = thurs_adjust(compute_total(invoice , manifest) , manifest)
+        total = compute_total(invoice, manifest)
         expect(total).to eq(900)
       end
     end
     context 'one ga, one student ticket' do
       it 'reduces by 200 * 2' do
-        invoice = start_purchase(false, false, false, false)
+        invoice = start_purchase(false, false, false, "thursday")
         manifest = Hash.new(0)
         manifest[:general_admission] = 1
         manifest[:student] = 1
-        total = thurs_adjust(compute_total(invoice , manifest) , manifest)
+        total = compute_total(invoice, manifest)
         expect(total).to eq(1500)
       end
     end
     context 'one group ticket' do
       it 'does NOT reduce cost by 200' do
-        invoice = start_purchase(false, false, false, false)
+        invoice = start_purchase(false, false, false, "thursday")
         manifest = Hash.new(0)
         manifest[:group] = 1
-        total = thurs_adjust(compute_total(invoice , manifest) , manifest)
+        total = compute_total(invoice, manifest)
         expect(total).to eq(600)
       end
     end
     context '1 ga, 1 student ticket' do
       context '3d movie & overlength' do
         it 'reduce by 200/each' do
-          invoice = start_purchase(true, true, false, false)
+          invoice = start_purchase(true, true, false, "thursday")
           manifest = Hash.new(0)
           manifest[:general_admission] = 1
           manifest[:student] = 1
-          total = thurs_adjust(compute_total(invoice , manifest) , manifest)
+          total = compute_total(invoice, manifest)
           expect(total).to eq(2400)
         end
       end
