@@ -185,9 +185,9 @@ describe 'Its Thursday!' do
       it 'does NOT reduce cost by 200' do
         invoice = start_purchase(false, false, false, "thursday")
         manifest = Hash.new(0)
-        manifest[:group] = 1
+        manifest[:general_admission] = 20
         total = compute_total(invoice, manifest)
-        expect(total).to eq(600)
+        expect(total).to eq(12000)
       end
     end
     context '1 ga, 1 student ticket' do

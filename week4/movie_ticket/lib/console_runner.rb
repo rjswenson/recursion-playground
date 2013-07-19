@@ -20,28 +20,20 @@ p "Welcome, lowly employee!"
 p "What movie would the guest(s) like to see:"
 title = gets.chomp.to_s
 
-p "How many tickets would they like:"
-tix_num = gets.chomp.to_i
 manifest = Hash.new(0)
-remainder = 0
 
-if tix_num >= 20
-  manifest[:group] = tix_num
-else
-  p "How many children[under 13]:"
-  manifest[:child] = gets.chomp.to_i
+p "How many children[under 13]:"
+manifest[:child] = gets.chomp.to_i
 
-  p "How many senior citizens[65+]:"
-  manifest[:senior] = gets.chomp.to_i
+p "How many senior citizens[65+]:"
+manifest[:senior] = gets.chomp.to_i
 
-  p "How many students:"
-  manifest[:student] = gets.chomp.to_i
-  manifest.each {|k , v| remainder = (tix_num -= v)}
-  manifest[:general_admission] = remainder
+p "How many students:"
+manifest[:student] = gets.chomp.to_i
+
+p "How many general admission tickets:"
+manifest[:general_admission] = gets.chomp.to_i
  
-  puts "\n\nThat leaves #{manifest[:general_admission]} general admission tickets."
-end
-
 isOverLength = false
 is3d = false
 isLoge = false
