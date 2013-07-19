@@ -15,18 +15,23 @@ def start_purchase(isOverLength = false,
   return invoice
 end
 
-def compute_total(invoice, manifest)
+def compute_total(invoice)
   total = 0
   num_tix = 0
-  manifest.each {|k, v| num_tix += v}
+  ticket_types = [:general_admission, :student, :senior, :child]
+
+  
+  for x in 0..ticket_types.length-1
+    num_tix += invoice[ticket_types[x]].to_i
+  end
 
   if num_tix >= 20
     total = (num_tix * 600)
   else
-    total += manifest[:general_admission] * 1100
-    total += manifest[:student] * 800
-    total += manifest[:senior] * 600
-    total += manifest[:child] * 550
+    total += invoice[:general_admission] * 1100
+    total += invoice[:student] * 800
+    total += invoice[:senior] * 600
+    total += invoice[:child] * 550
   end
   if invoice[:is3d] == true
     total += num_tix * 300

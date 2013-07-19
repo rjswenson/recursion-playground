@@ -13,32 +13,18 @@
 # 6. thursday_adjust
 # 7. output movie name and cost
 require_relative("./movie_ticket.rb")
+require ('bigdecimal')
+
+isOverLength = false
+is3d = false
+isLoge = false
+day = "s"
 
 p "**********************Jenky-POS-Systems**********************"
 p "Welcome, lowly employee!"
 
 p "What movie would the guest(s) like to see:"
 title = gets.chomp.to_s
-
-manifest = Hash.new(0)
-
-p "How many children[under 13]:"
-manifest[:child] = gets.chomp.to_i
-
-p "How many senior citizens[65+]:"
-manifest[:senior] = gets.chomp.to_i
-
-p "How many students:"
-manifest[:student] = gets.chomp.to_i
-
-p "How many general admission tickets:"
-manifest[:general_admission] = gets.chomp.to_i
- 
-isOverLength = false
-is3d = false
-isLoge = false
-day = "s"
-
 
 p "What is the day, please spell it out[i.e. Monday]:"
 day = gets.chomp.to_s.downcase
@@ -64,9 +50,23 @@ if mins > 120
 end
 
 invoice = start_purchase(isOverLength, is3d, isLoge, day)
-total = compute_total(invoice, manifest)
 
 
-puts %Q|\n\nThe total cost is: $#{'%.2f' % (total/100)} \n \nfor tickets to: '#{title}'\n\n|
+p "How many children[under 13]:"
+invoice[:child] = gets.chomp.to_i
+
+p "How many senior citizens[65+]:"
+invoice[:senior] = gets.chomp.to_i
+
+p "How many students:"
+invoice[:student] = gets.chomp.to_i
+
+p "How many general admission tickets:"
+invoice[:general_admission] = gets.chomp.to_i
+ 
+total = compute_total(invoice)
+total = total + 0.0
+
+puts %Q|\n\nThe total cost is: $#{'%.02f' % (total/100)} \n \nfor tickets to: '#{title}'\n\n|
 
 
