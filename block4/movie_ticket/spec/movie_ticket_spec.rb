@@ -1,58 +1,9 @@
 require_relative './../lib/movie_ticket.rb'
 
 describe 'starting the purchase' do
-  it 'returns an invoice' do
-    invoice = start_purchase()
-    expect(invoice).to be
-  end
-
-  it 'returns an invoice with a total' do
-    invoice = start_purchase()
-    expect(invoice).to be_a(Hash)
-    expect(invoice[:total]).to be_an(Integer)
-  end
-
   it 'returns a starting total of 0' do
-    invoice = start_purchase()
-    expect(invoice[:total]).to eq(0)
-  end
-
-  context 'when the movie is over length' do
-    it 'sets a flag for overLength' do
-      invoice = start_purchase(true)
-      expect(invoice[:total]).to eq(0)
-      expect(invoice[:isOverLength]).to eq(true)
-    end
-
-    context 'when the movie is 3d' do
-      it 'sets a flag for 3d' do
-        invoice = start_purchase(true, true)
-        expect(invoice[:total]).to eq(0)
-        expect(invoice[:isOverLength]).to eq(true)
-        expect(invoice[:is3d]).to eq(true)
-      end
-
-      context 'when the movie is in the loge' do
-        it 'sets a flag for loge' do
-          invoice = start_purchase(true, true, true)
-          expect(invoice[:isOverLength]).to eq(true)
-          expect(invoice[:is3d]).to eq(true)
-          expect(invoice[:isLoge]).to eq(true)
-          expect(invoice[:total]).to eq(0)
-        end
-      end
-
-      context 'when the movie is on the weekend' do
-        it 'sets a flag for weekends' do
-          invoice = start_purchase(true, true, true, "saturday")
-          expect(invoice[:isOverLength]).to eq(true)
-          expect(invoice[:is3d]).to eq(true)
-          expect(invoice[:isLoge]).to eq(true)
-          expect(invoice[:day]).to eq("saturday")
-          expect(invoice[:total]).to eq(0)
-        end
-      end
-    end
+    purch = MovieTicketPurchase.new
+    expect(purch.total).to eq(0)
   end
 end
 
@@ -60,13 +11,9 @@ describe 'adding tickets' do
   context 'given a 3d movie' do
     context 'given a single general admission ticket' do
       it 'computes the total' do
-        invoice = start_purchase(false, true, false, "monday")
-        invoice[:general_admission] = 1
-        invoice[:student] = 0
-        invoice[:senior] = 0
-        invoice[:child] = 0
-        total = compute_total(invoice)
-        expect(total).to eq(1400)
+        purchase = MovieTicketPurchase.new(false, true, false, 'monday')
+        purchase.general_admission = 1
+        expect(purchase.total).to eq(1400)
       end
     end
   end
@@ -74,61 +21,41 @@ describe 'adding tickets' do
   context 'given a non-3d movie' do
     context 'given a single general admission ticket' do
       it 'computes the total' do
-        invoice = start_purchase(false, false, false, "monday")
-        invoice[:general_admission] = 1
-        invoice[:student] = 0
-        invoice[:senior] = 0
-        invoice[:child] = 0
-        total = compute_total(invoice)
-        expect(total).to eq(1100)
+        purchase = MovieTicketPurchase.new(false, false, false, 'monday')
+        purchase.general_admission = 1
+        expect(purchase.total).to eq(1100)
       end
     end
   end
   context 'given an overlength movie' do
     context ' given a single general admission ticket' do
       it 'computes the total' do
-        invoice = start_purchase(true, false, false, "monday")
-        invoice[:general_admission] = 1
-        invoice[:student] = 0
-        invoice[:senior] = 0
-        invoice[:child] = 0
-        total = compute_total(invoice)
-        expect(total).to eq(1250)
+        purchase = MovieTicketPurchase.new(true, false, false, 'monday')
+        purchase.general_admission = 1
+        expect(purchase.total).to eq(1250)
       end
     end
     context 'given a single length, 3d movie' do
       it 'computes the total' do
-      invoice = start_purchase(true, true, false, "monday")
-      invoice[:general_admission] = 1
-      invoice[:student] = 0
-      invoice[:senior] = 0
-      invoice[:child] = 0
-      total = compute_total(invoice)
-      expect(total).to eq(1550)
+        purchase = MovieTicketPurchase.new(true, true, false, 'monday')
+        purchase.general_admission = 1
+        expect(purchase.total).to eq(1550)
       end
     end
     context 'given a weekend, long, 3d, box-seat movie' do
       it 'computes total' do
-        invoice = start_purchase(true, true, true, "saturday")
-        invoice[:general_admission] = 1
-        invoice[:student] = 0
-        invoice[:senior] = 0
-        invoice[:child] = 0
-        total = compute_total(invoice)
-        expect(total).to eq(1900)
+        purchase = MovieTicketPurchase.new(true, true, true, 'saturday')
+        purchase.general_admission = 1
+        expect(purchase.total).to eq(1900)
       end
     end
   end
   context 'given 2 ga' do
     context 'with no special movie params' do
       it 'computes the total' do
-        invoice = start_purchase(false, false, false, "monday")
-        invoice[:general_admission] = 2
-        invoice[:student] = 0
-        invoice[:senior] = 0
-        invoice[:child] = 0
-        total = compute_total(invoice)
-        expect(total).to eq(2200)
+        purchase = MovieTicketPurchase.new(false, false, false, 'monday')
+        purchase.general_admission = 2
+        expect(purchase.total).to eq(2200)
       end
     end
   end

@@ -1,57 +1,57 @@
+class MovieTicketPurchase
+  attr_writer :general_admission, :student, :senior, :child
 
-
-def start_purchase(isOverLength = false, 
+  def initialize(isOverLength = false,
                    is3d = false,
                    isLoge = false,
-                   day = "s")
-  
-  invoice = Hash.new
-  invoice[:total] = 0
-  invoice[:isOverLength] = isOverLength
-  invoice[:is3d] = is3d
-  invoice[:isLoge] = isLoge
-  invoice[:day] = day
-  
-  return invoice
+                   day = "")
+
+    @isOverLength      = isOverLength
+    @is3d              = is3d
+    @isLoge            = isLoge
+    @day               = day
+    @general_admission = 0
+    @student           = 0
+    @senior            = 0
+    @child             = 0
+  end
+
+  def total
+    total = 0
+    num_tix = 0
+
+    num_tix += @general_admission
+    num_tix += @student
+    num_tix += @senior
+    num_tix += @child
+
+    if num_tix >= 20
+      total = (num_tix * 600)
+    else
+      total += @general_admission * 1100
+      total += @student * 800
+      total += @senior * 600
+      total += @child * 550
+    end
+
+    if @is3d == true
+      total += num_tix * 300
+    end
+
+    if @isOverLength == true
+      total += num_tix * 150
+    end
+
+    if @isLoge == true
+      total += num_tix * 200
+    end
+
+    if @day == "saturday" || @day == "sunday"
+      total += num_tix * 150
+    elsif @day == "thursday" && num_tix < 20
+      total += num_tix * -200
+    end
+
+    return total
+  end
 end
-
-def compute_total(invoice)
-  total = 0
-  num_tix = 0
-  ticket_types = [:general_admission, :student, :senior, :child]
-
-  
-  for x in 0..ticket_types.length-1
-    num_tix += invoice[ticket_types[x]].to_i
-  end
-
-  if num_tix >= 20
-    total = (num_tix * 600)
-  else
-    total += invoice[:general_admission] * 1100
-    total += invoice[:student] * 800
-    total += invoice[:senior] * 600
-    total += invoice[:child] * 550
-  end
-  if invoice[:is3d] == true
-    total += num_tix * 300
-  end
-  if invoice[:isOverLength] == true
-    total += num_tix * 150
-  end
-  if invoice[:isLoge] == true
-    total += num_tix * 200
-  end
-
-  if invoice[:day] == "saturday" || invoice[:day] == "sunday"
-    total += num_tix * 150
-  elsif invoice[:day] == "thursday" && num_tix < 20
-    total += num_tix * -200
-  end
-    
-  
-
-  return total
-end
-
-
