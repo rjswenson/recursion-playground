@@ -1,4 +1,4 @@
-Ruby_Practice
-=============
+Linear Recursion Playground
+===========================
 
-Ruby Practice
+Source code and tests for linear recursion homework.
